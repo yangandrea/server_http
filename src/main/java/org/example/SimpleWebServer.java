@@ -56,24 +56,33 @@ public class SimpleWebServer {
     private static void serveFile(String filePath, DataOutputStream out) {
         try {
             Path path = Paths.get(filePath);
-
+    
             if (Files.exists(path) && !Files.isDirectory(path)) {
                 byte[] fileContent = Files.readAllBytes(path);
-
+    
+                String contentType;
+                if (filePath.endsWith(".html")) {
+                    contentType = "text/html; charset=UTF-8";
+                } else if (filePath.endsWith(".css")) {
+                    contentType = "text/css; charset=UTF-8";
+                } else {
+                    contentType = "application/octet-stream";
+                }
+    
                 out.writeBytes("HTTP/1.1 200 OK\r\n");
                 out.writeBytes("Status: OK\r\n");
                 out.writeBytes("Date: " + LocalDateTime.now().toString() + "\r\n");
-                out.writeBytes("Content-Type: text/html; charset=UTF-8\r\n");
+                out.writeBytes("Content-Type: " + contentType + "\r\n");
                 out.writeBytes("Content-Length: " + fileContent.length + "\r\n");
                 out.writeBytes("Connection: keep-alive\r\n");
                 out.writeBytes("Server: SimpleWebServer\r\n");
                 out.writeBytes("\r\n");
                 out.write(fileContent);
             } else {
-                // File non trovato, restituisci 404 Not Found
+                // File not found, return 404 Not Found
                 send404NotFound(out);
             }
-
+    
             out.flush();
         } catch (IOException e) {
             e.printStackTrace();
