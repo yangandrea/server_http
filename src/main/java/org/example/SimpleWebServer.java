@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class SimpleWebServer {
     private static final int PORT = 8080;
 
-    private static final String ROOT_DIRECTORY = "C:\\Users\\Fateo\\IdeaProjects\\untitled1\\htdocs";
+    private static final String ROOT_DIRECTORY = "htdocs";
 
     public static void main(String[] args) {
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
