@@ -81,6 +81,5 @@ public class SimpleWebServer {
     }
 
     private static void send404NotFound(DataOutputStream out) throws IOException {
-        // Implementa la risposta per il codice di stato 404 qui, se necessario
     }
 }
