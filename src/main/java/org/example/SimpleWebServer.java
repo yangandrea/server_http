@@ -81,5 +81,22 @@ public class SimpleWebServer {
     }
 
     private static void send404NotFound(DataOutputStream out) throws IOException {
+    String filePath = ROOT_DIRECTORY + "/404.html";
+    Path path = Paths.get(filePath);
+
+    if (Files.exists(path) && !Files.isDirectory(path)) {
+        byte[] fileContent = Files.readAllBytes(path);
+
+        out.writeBytes("HTTP/1.1 404 Not Found\r\n");
+        out.writeBytes("Status: Not Found\r\n");
+        out.writeBytes("Date: " + LocalDateTime.now().toString() + "\r\n");
+        out.writeBytes("Content-Type: text/html; charset=UTF-8\r\n");
+        out.writeBytes("Content-Length: " + fileContent.length + "\r\n");
+        out.writeBytes("Connection: keep-alive\r\n");
+        out.writeBytes("Server: SimpleWebServer\r\n");
+        out.writeBytes("\r\n");
+        out.write(fileContent);
+    }
+    out.flush();
     }
 }
