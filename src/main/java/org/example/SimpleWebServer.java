@@ -51,7 +51,7 @@ public class SimpleWebServer {
                         serveJson(out);
                         return;
                     } else {
-                        requestedFilePath = ROOT_DIRECTORY + "\\classe.json";
+                        requestedFilePath = ROOT_DIRECTORY + requestTokens[1];
                     }
                     serveFile(requestedFilePath, out);
                 }
